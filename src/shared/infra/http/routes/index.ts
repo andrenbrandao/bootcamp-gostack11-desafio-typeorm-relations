@@ -6,7 +6,7 @@ import ordersRouter from '@modules/orders/infra/http/routes/orders.routes';
 const routes = Router();
 
 routes.use('/customers', customersRouter);
-// routes.use('/products', productsRouter);
+routes.use('/products', productsRouter);
 // routes.use('/orders', ordersRouter);
 
 export default routes;
