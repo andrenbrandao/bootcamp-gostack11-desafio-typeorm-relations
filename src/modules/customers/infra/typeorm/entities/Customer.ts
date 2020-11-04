@@ -5,7 +5,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Index,
+  OneToMany,
 } from 'typeorm';
+
+import Order from '@modules/orders/infra/typeorm/entities/Order';
 
 @Entity('customers')
 class Customer {
@@ -18,6 +21,9 @@ class Customer {
   @Index({ unique: true })
   @Column()
   email: string;
+
+  @OneToMany(() => Order, order => order.customer)
+  orders: Order[];
 
   @CreateDateColumn()
   created_at: Date;

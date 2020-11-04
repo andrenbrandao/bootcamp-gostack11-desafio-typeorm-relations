@@ -111,7 +111,7 @@ describe('App', () => {
     expect(response.status).toBe(400);
   });
 
-  it.skip('should be able to create a new order', async () => {
+  it('should be able to create a new order', async () => {
     const product = await request(app).post('/products').send({
       name: 'Produto 01',
       price: 500,
