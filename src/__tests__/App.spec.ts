@@ -23,8 +23,8 @@ describe('App', () => {
   });
 
   beforeEach(async () => {
-    // await connection.query('DELETE FROM orders_products');
-    // await connection.query('DELETE FROM orders');
+    await connection.query('DELETE FROM orders_products');
+    await connection.query('DELETE FROM orders');
     await connection.query('DELETE FROM products');
     await connection.query('DELETE FROM customers');
   });
@@ -263,7 +263,7 @@ describe('App', () => {
     );
   });
 
-  it.skip('should be able to list one specific order', async () => {
+  it('should be able to list one specific order', async () => {
     const customer = await request(app).post('/customers').send({
       name: 'Rocketseat',
       email: 'oi@rocketseat.com.br',
@@ -299,7 +299,7 @@ describe('App', () => {
         orders_products: expect.arrayContaining([
           expect.objectContaining({
             product_id: product.body.id,
-            price: '500.00',
+            price: 500,
             quantity: 5,
           }),
         ]),

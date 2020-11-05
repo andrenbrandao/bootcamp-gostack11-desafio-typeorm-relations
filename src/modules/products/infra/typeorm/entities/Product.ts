@@ -1,4 +1,3 @@
-import OrdersProducts from '@modules/orders/infra/typeorm/entities/OrdersProducts';
 import {
   Entity,
   Column,
@@ -9,7 +8,8 @@ import {
   Index,
 } from 'typeorm';
 
-// import OrdersProducts from '@modules/orders/infra/typeorm/entities/OrdersProducts';
+import OrdersProducts from '@modules/orders/infra/typeorm/entities/OrdersProducts';
+
 @Entity('products')
 class Product {
   @PrimaryGeneratedColumn('uuid')
