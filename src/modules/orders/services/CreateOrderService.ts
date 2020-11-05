@@ -43,7 +43,13 @@ class CreateOrderService {
       );
 
       if (!findProduct)
-        throw new AppError(`Could not find product with id ${product.id}`);
+        throw new AppError(`Could not find product with id ${product.id}.`);
+
+      if (product.quantity > findProduct.quantity) {
+        throw new AppError(
+          `There is only ${findProduct.quantity} units of ${product.id} available.`,
+        );
+      }
 
       return {
         product_id: product.id,

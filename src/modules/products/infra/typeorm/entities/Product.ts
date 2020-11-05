@@ -1,3 +1,4 @@
+import OrdersProducts from '@modules/orders/infra/typeorm/entities/OrdersProducts';
 import {
   Entity,
   Column,
@@ -31,7 +32,8 @@ class Product {
   @Column()
   quantity: number;
 
-  // order_products: OrdersProducts[];
+  @OneToMany(() => OrdersProducts, orders_products => orders_products.product)
+  orders_products: OrdersProducts[];
 
   @CreateDateColumn()
   created_at: Date;
