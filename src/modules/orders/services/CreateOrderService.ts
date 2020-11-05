@@ -38,23 +38,24 @@ class CreateOrderService {
     const currentProducts = await this.productsRepository.findAllById(products);
 
     const productsWithPrice = products.map(product => {
-      const findProduct = currentProducts.find(
+      const productInDB = currentProducts.find(
         currentProduct => currentProduct.id === product.id,
       );
 
-      if (!findProduct)
+      if (!productInDB)
         throw new AppError(`Could not find product with id ${product.id}.`);
 
-      if (product.quantity > findProduct.quantity) {
+      if (product.quantity > productInDB.quantity) {
         throw new AppError(
-          `There is only ${findProduct.quantity} units of ${product.id} available.`,
+          `There is only ${productInDB.quantity} units of ${product.id} available.`,
         );
       }
 
       return {
         product_id: product.id,
-        price: findProduct.price,
+        price: productInDB.price,
         quantity: product.quantity,
+        quantity_left: productInDB.quantity - product.quantity,
       };
     });
 
@@ -62,6 +63,13 @@ class CreateOrderService {
       customer,
       products: productsWithPrice,
     });
+
+    const productsWithUpdatedQuantity = productsWithPrice.map(product => ({
+      id: product.product_id,
+      quantity: product.quantity_left,
+    }));
+
+    await this.productsRepository.updateQuantity(productsWithUpdatedQuantity);
 
     return order;
   }
