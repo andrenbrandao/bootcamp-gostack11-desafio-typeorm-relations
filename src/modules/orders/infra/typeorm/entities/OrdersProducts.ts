@@ -33,14 +33,10 @@ class OrdersProducts {
   @Column('decimal', {
     precision: 10,
     scale: 2,
-    transformer: {
-      to: (value: number): number => value,
-      from: (value: string): number => parseFloat(value),
-    },
   })
   price: number;
 
-  @Column()
+  @Column('integer')
   quantity: number;
 
   @CreateDateColumn()
